@@ -67,12 +67,12 @@ $(function() {
        /* This test to ensure that when loadFeed function is called and completes its work,
         * there is at least a single .entry element within the .feed container.
         */
-        let container = $('.feed');// Selects the feed container
+        let feedContainer = $('.feed.entry');// Selects the entry element
         let entry = [];
         // This function finish executing before the spec is run.
         beforeEach(function(done) {
             loadFeed(0, function() {
-                entry.push(container.html());// Gets and pushes the first element in the feed container into the entry array
+                entry.push(feedContainer.html());// Gets and pushes the first entry element in the feed container into the entry array
                 done(); // The spec would not run until this function is called
             });
         });
@@ -89,25 +89,25 @@ $(function() {
          * by the loadFeed function the content actually changes.
          */
         let container = $('.feed');
-        let entry = [];
-        let newEntry = [];
+        let initialContent = [];
+        let finalContent =  [];
+        
         // This function runs before the spec
         beforeEach(function(done) {
-            // This loads the feed and pushes its content into entry array
+            // This loads the first and second feed and pushes its content into different array
             loadFeed(0, function() {
-                entry.push(container.html());
-                done();
+            	initialContent.push(container.html());
+            	
+            	loadFeed(1, function() {
+            		finalContent.push(container.html());
+            		done();
+            	});
             });
-            // This loads the second feed and pushes its content into newEntry array
-            loadFeed(1, function() {{
-                newEntry.push(container.html());
-                done();
-            }});
         });
          
         // The specification and test
         it('should change content when a new feed is loaded', function(done) {
-            expect(entry[0]).not.toEqual(newEntry[0]);
+            expect(initialContent).not.toEqual(finalContent);
             done();
         });
     });
