@@ -67,11 +67,11 @@ $(function() {
        /* This test to ensure that when loadFeed function is called and completes its work,
         * there is at least a single .entry element within the .feed container.
         */
-        let feedContainer = $('.feed.entry');// Selects the entry element
         let entry = [];
         // This function finish executing before the spec is run.
         beforeEach(function(done) {
             loadFeed(0, function() {
+                let feedContainer = $('.feed .entry');// Selects the entry element
                 entry.push(feedContainer.html());// Gets and pushes the first entry element in the feed container into the entry array
                 done(); // The spec would not run until this function is called
             });
